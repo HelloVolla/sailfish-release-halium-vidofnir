@@ -26,9 +26,12 @@ jobs:
 
     - name: Build mic
       run: |
-        export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
-        export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
-        export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
+        #export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
+        #export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
+        #export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
+        export VERSION=devel
+        export RELEASE=4.5.0.24
+        export EXTRA_NAME=a1
         docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c "
             mkdir -p build ;
             cd build ;
