@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  RELEASESDK: 4.5.0.24
+  RELEASESDK: 4.5.0.16
 
 jobs:
   build:
