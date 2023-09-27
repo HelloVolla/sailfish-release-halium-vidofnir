@@ -6,8 +6,7 @@ on:
   push:
     tags:
       - release-**-**-**
-
-on: workflow_dispatch
+  workflow_dispatch:
 
 env:
   RELEASESDK: 4.5.0.24
