@@ -35,7 +35,7 @@ jobs:
             cp -r /share/. . ;
 
             #Install required packages
-            sudo zypper -n in kmod lvm2 atruncate pigz droid-tools android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip
+            sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip
 
             #Create the image
             ./scripts/create-image.sh --release $RELEASE --version $VERSION
