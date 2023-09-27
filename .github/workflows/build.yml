@@ -1,0 +1,58 @@
+name: Github CI build
+
+# GITHUB_REF_NAME in the form of release-$VERSION-$RELEASE-$EXTRA_NAME
+
+on:
+  push:
+    tags:
+      - release-**-**-**
+
+env:
+  RELEASESDK: 4.5.0.24
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Prepare
+      run: |
+        mkdir output
+
+    - name: Build mic
+      run: |
+        export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
+        export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
+        export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
+        docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c "
+            mkdir -p build ;
+            cd build ;
+            cp -r /share/. . ;
+
+            #Install required packages
+            sudo zypper -n in kmod lvm2 atruncate pigz droid-tools android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip
+
+            #Create the image
+            ./scripts/create-image.sh --release $RELEASE --version $VERSION
+
+            # create fastboot flashable super.img
+            find
+            git clone https://github.com/LonelyFool/lpunpack_and_lpmake.git
+            cd lpunpack_and_lpmake
+            export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
+            ./make.sh && cd ..
+            #curl -O https://volla.tech/filedump/ubuntu-touch-mimameid-firmware-r.tar.xz
+            #tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
+            ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image 'system_a=SailfishOS-vidofnir/root.img' --output SailfishOS-vidofnir/super.img
+
+            sudo cp -r mic/. /share/output/mic"
+
+    - name: Update release
+      run: |
+        gh release upload ${{ github.ref_name }} output/mic/sfe-*/*.zip --clobber 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
