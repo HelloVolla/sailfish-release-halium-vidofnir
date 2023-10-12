@@ -67,7 +67,20 @@ curl -L "$URL/$KICKSTART" --output - | rpm2cpio - | cpio -idmv -D $TMPWORKDIR/rp
 cp $TMPWORKDIR/rpm/usr/share/kickstarts/Jolla-\@RELEASE\@-$DEVICE-$VERSION-\@ARCH\@.ks $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-$VERSION-\@ARCH\@.ks
 
 echo "Creating mic with $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks "
-sudo mic create fs --pack-to=sfe-$DEVICE-$RELEASE$EXTRA_NAME.tar.gz --arch=$PORT_ARCH \
+sudo mic create loop --pack-to=sfe-$DEVICE-$RELEASE$EXTRA_NAME.tar.gz --arch=$PORT_ARCH \
  --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE \
  --record-pkgs=name,url --outdir=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME \
  $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-$VERSION-\@ARCH\@.ks 
+
+# create fastboot flashable super.img
+find
+git clone https://github.com/LonelyFool/lpunpack_and_lpmake.git
+cd lpunpack_and_lpmake
+export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
+./make.sh && cd ..
+#curl -O https://volla.tech/filedump/ubuntu-touch-mimameid-firmware-r.tar.xz
+#tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
+./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image 'system_a=SailfishOS-vidofnir/root.img' --output SailfishOS-vidofnir/super.img
+
+sudo cp -r mic/. /share/output/mic
+	    
