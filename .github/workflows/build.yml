@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: coderus/sailfishos-platform-sdk:$RELEASESDK
+      image: coderus/sailfishos-platform-sdk:4.5.0.16
       env:
         VERSION: devel
         RELEASE: 4.5.0.24
