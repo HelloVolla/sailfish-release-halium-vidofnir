@@ -36,12 +36,6 @@ jobs:
     - name: Prepare
       run: |
         mkdir output
-
-    - name: Build mic
-      run: |
-        #export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
-        #export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
-        #export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
         echo $PWD
         whoami
         mount
@@ -49,12 +43,10 @@ jobs:
         mkdir -p build ;
         cd build ;
         cp -r /share/. . ;
-
-        #Install required packages
         sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
-
-        #Create the image
-        ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
+        
+    - name: Build mic
+      run: ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
 
     - name: Update release
       run: |
