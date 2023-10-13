@@ -14,7 +14,19 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container:
+      image: coderus/sailfishos-platform-sdk:4.5.0.16
+      env:
+        VERSION: devel
+        RELEASE: 4.5.0.24
+        EXTRA_NAME: a1
+        PLATFORM_SDK_ROOT: /srv/mer
+        ANDROID_ROOT: /parentroot/srv/hadk
+        VENDOR: volla
+        DEVICE: halium-vidofnir
+        PORT_ARCH: aarch64
+      volumes:
+        - /home/runner/work/sailfish-release-halium-vidofnir/sailfish-release-halium-vidofnir:/share
     permissions:
       contents: write
 
