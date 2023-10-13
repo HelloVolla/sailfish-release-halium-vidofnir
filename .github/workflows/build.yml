@@ -20,10 +20,13 @@ jobs:
         VERSION: devel
         RELEASE: 4.5.0.24
         EXTRA_NAME: a1
-      ports:
-        - 80
+        PLATFORM_SDK_ROOT: /srv/mer
+        ANDROID_ROOT: /parentroot/srv/hadk
+        VENDOR: volla
+        DEVICE: halium-vidofnir
+        PORT_ARCH: aarch64
       volumes:
-        - my_docker_volume:/volume_mount
+        - $PWD:/share
     permissions:
       contents: write
 
@@ -42,17 +45,15 @@ jobs:
 
         mount
         df
-        docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME  /bin/bash -c "
-            mkdir -p build ;
-            cd build ;
-            cp -r /share/. . ;
+        mkdir -p build ;
+        cd build ;
+        cp -r /share/. . ;
 
-            #Install required packages
-            sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
+        #Install required packages
+        sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
 
-            #Create the image
-            ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
-         "
+        #Create the image
+        ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
 
     - name: Update release
       run: |
