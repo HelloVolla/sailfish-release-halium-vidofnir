@@ -14,19 +14,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: coderus/sailfishos-platform-sdk:4.5.0.16
-      env:
-        VERSION: devel
-        RELEASE: 4.5.0.24
-        EXTRA_NAME: a1
-        PLATFORM_SDK_ROOT: /srv/mer
-        ANDROID_ROOT: /parentroot/srv/hadk
-        VENDOR: volla
-        DEVICE: halium-vidofnir
-        PORT_ARCH: aarch64
-      volumes:
-        - $PWD:/share
+
     permissions:
       contents: write
 
@@ -42,7 +30,8 @@ jobs:
         #export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
         #export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
         #export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
-
+        echo $PWD
+        whoami
         mount
         df
         mkdir -p build ;
