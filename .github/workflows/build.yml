@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v3
         
     - name: Build mic
-      run: ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
+      run: /share/scripts/create-image.sh --release $RELEASE --version $VERSION ;
 
     - name: Update release
       run: |
