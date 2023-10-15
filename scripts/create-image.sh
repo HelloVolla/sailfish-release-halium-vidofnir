@@ -2,13 +2,14 @@
 set -e
 echo "Prepare steps..."
 mkdir output
-echo $PWD
+pwd
 whoami
 mount
 df
-mkdir -p build ;
-cd build ;
-cp -r /share/. . ;
+cd /share
+mkdir -p build
+cd build
+find /share
 
 echo "Install packages..."
 sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
