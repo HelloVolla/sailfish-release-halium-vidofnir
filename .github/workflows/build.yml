@@ -14,28 +14,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: coderus/sailfishos-platform-sdk:4.5.0.16
-      env:
-        VERSION: devel
-        RELEASE: 4.5.0.24
-        EXTRA_NAME: a1
-        PLATFORM_SDK_ROOT: /srv/mer
-        ANDROID_ROOT: /parentroot/srv/hadk
-        VENDOR: volla
-        DEVICE: halium-vidofnir
-        PORT_ARCH: aarch64
-      volumes:
-        - /home/runner/work/sailfish-release-halium-vidofnir/sailfish-release-halium-vidofnir:/share
-    permissions:
-      contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
         
     - name: Build mic
-      run: /share/scripts/create-image.sh --release $RELEASE --version $VERSION ;
+      run: docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
+            ./scripts/create-image.sh --release $RELEASE --version $VERSION*
 
     - name: Update release
       run: |
