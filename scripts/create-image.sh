@@ -1,15 +1,16 @@
 #!/bin/bash
 set -e
 echo "Prepare steps..."
-mkdir output
 pwd
 whoami
 mount
-df
-cd /share
+df -h
+
+mkdir -p output
 mkdir -p build
 cd build
-find /share
+cp -r /share/. .
+find
 
 echo "Install packages..."
 sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
