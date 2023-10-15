@@ -1,9 +1,22 @@
 #!/bin/bash
 set -e
+echo "Prepare steps..."
+mkdir output
+echo $PWD
+whoami
+mount
+df
+mkdir -p build ;
+cd build ;
+cp -r /share/. . ;
+
+echo "Install packages..."
+sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
 
 # Creates an image under mic/fe-$DEVICE-$RELEASE$EXTRA_NAME 
 # after downloading the kickstart file from the testing or devel repo.	
 
+echo "Build Image..."
 VERSION=devel
 RELEASE=""
 
