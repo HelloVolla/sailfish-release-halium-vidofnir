@@ -20,7 +20,7 @@ jobs:
         
     - name: Build mic
       run: docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
-            ./scripts/create-image.sh --release $RELEASE --version $VERSION*
+            ./scripts/create-image.sh --release $RELEASE --version $VERSION"
 
     - name: Update release
       run: |
