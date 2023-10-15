@@ -32,18 +32,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Prepare
-      run: |
-        mkdir output
-        echo $PWD
-        whoami
-        mount
-        df
-        mkdir -p build ;
-        cd build ;
-        cp -r /share/. . ;
-        sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
         
     - name: Build mic
       run: ./scripts/create-image.sh --release $RELEASE --version $VERSION ;
