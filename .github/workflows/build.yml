@@ -31,7 +31,8 @@ jobs:
       contents: write
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
         
     - name: Build mic
       run: /share/scripts/create-image.sh --release $RELEASE --version $VERSION ;
