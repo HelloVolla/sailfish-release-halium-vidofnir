@@ -14,12 +14,19 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v3
         
     - name: Build mic
-      run: docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
+      run:  |
+        export VERSION=devel
+        export RELEASE=4.5.0.24
+        export EXTRA_NAME=-alpha2
+        docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
+            find \
             ./scripts/create-image.sh --release $RELEASE --version $VERSION"
 
     - name: Update release
