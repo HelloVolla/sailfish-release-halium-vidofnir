@@ -1,19 +1,12 @@
 #!/bin/bash
 set -e
 echo "Prepare steps..."
-pwd
-whoami
-mount
-df -h
-
 cd /share
 sudo mkdir -p output
 sudo mkdir -p build
 sudo chmod 777 output
 sudo chmod 777 build
 cd build
-#cp -r /share/. .
-find
 
 echo "Install packages..."
 sudo zypper -n in kmod lvm2 atruncate pigz android-tools  curl clang git zlib-devel glibc-devel glibc-static libstdc++-devel p7zip ;
@@ -96,12 +89,16 @@ sudo mic create loop --arch=$PORT_ARCH \
 
 # create fastboot flashable super.img
 find
+echo "Build tools for super.img creation..."
+
 git clone https://github.com/LonelyFool/lpunpack_and_lpmake.git
 cd lpunpack_and_lpmake
 export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
 ./make.sh && cd ..
 #curl -O https://volla.tech/filedump/ubuntu-touch-mimameid-firmware-r.tar.xz
 #tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
+
+echo "Create super.img..."
 ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/super.img
 
 #sudo cp -r mic/. /share/output/mic
