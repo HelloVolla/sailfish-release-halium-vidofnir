@@ -36,7 +36,7 @@ jobs:
         export VERSION=devel
         export RELEASE=4.5.0.24
         export EXTRA_NAME=-alpha2
-        docker run --rm --privileged --storage-opt size=15G -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
+        docker run --rm --privileged --mount type=bind,src=$PWD,dst=/share --mount type=bind,src=/data,dst=/data--env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
             /share/scripts/create-image.sh --release $RELEASE --version $VERSION ;"
 
     - name: Update release
