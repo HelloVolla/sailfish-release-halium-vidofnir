@@ -102,7 +102,7 @@ export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
 ./make.sh && cd ..
 #curl -O https://volla.tech/filedump/ubuntu-touch-mimameid-firmware-r.tar.xz
 #tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
-./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAMEr/super.img
+./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/super.img
 
 #sudo cp -r mic/. /share/output/mic
 	    
