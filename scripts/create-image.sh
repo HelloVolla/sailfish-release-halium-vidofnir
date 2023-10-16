@@ -7,8 +7,10 @@ mount
 df -h
 
 cd /share
-mkdir -p output
-mkdir -p build
+sudo mkdir -p output
+sudo mkdir -p build
+sudo chmod 777 output
+sudo chmod 777 build
 cd build
 #cp -r /share/. .
 find
