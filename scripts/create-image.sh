@@ -6,10 +6,11 @@ whoami
 mount
 df -h
 
+cd /share
 mkdir -p output
 mkdir -p build
 cd build
-cp -r /share/. .
+#cp -r /share/. .
 find
 
 echo "Install packages..."
@@ -101,5 +102,5 @@ export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
 #tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
 ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image 'system_a=SailfishOS-vidofnir/root.img' --output SailfishOS-vidofnir/super.img
 
-sudo cp -r mic/. /share/output/mic
+#sudo cp -r mic/. /share/output/mic
 	    
