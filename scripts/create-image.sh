@@ -99,10 +99,10 @@ export LDFLAGS="-lstdc++fs -L/usr/lib/gcc/aarch64-meego-linux-gnuabi/8.3.0/"
 #tar xvJf ubuntu-touch-mimameid-firmware-r.tar.xz
 
 echo "Create super.img..."
-./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/super.img
+sudo ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/super.img
 
 echo "Pack final image..."
-mv $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME $OUTPUTDIR/SailfishOS-vidofnir
-rm $OUTPUTDIR/SailfishOS-vidofnir/root.img
-7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on $OUTPUTDIR/SailfishOS-vidofnir.7z  $OUTPUTDIR/SailfishOS-vidofnir
+sudo mv $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME $OUTPUTDIR/SailfishOS-vidofnir
+sudo rm $OUTPUTDIR/SailfishOS-vidofnir/root.img
+sudo 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on $OUTPUTDIR/SailfishOS-vidofnir.7z  $OUTPUTDIR/SailfishOS-vidofnir
 	    
