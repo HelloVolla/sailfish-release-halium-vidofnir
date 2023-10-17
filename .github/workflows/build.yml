@@ -41,6 +41,6 @@ jobs:
 
     - name: Update release
       run: |
-        gh release upload ${{ github.ref_name }} output/mic/*.7z --clobber 
+        gh release upload ${{ github.ref_name }} output/*.7z --clobber 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
