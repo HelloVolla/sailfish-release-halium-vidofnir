@@ -104,5 +104,5 @@ sudo ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 -
 echo "Pack final image..."
 sudo mv $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME $OUTPUTDIR/SailfishOS-vidofnir
 sudo rm $OUTPUTDIR/SailfishOS-vidofnir/root.img
-sudo 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on $OUTPUTDIR/SailfishOS-vidofnir.7z  $OUTPUTDIR/SailfishOS-vidofnir
+sudo 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on /share/output/SailfishOS-vidofnir.7z  $OUTPUTDIR/SailfishOS-vidofnir
 	    
