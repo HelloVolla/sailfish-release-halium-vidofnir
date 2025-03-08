@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  RELEASESDK: 4.5.0.16
+  RELEASESDK: 5.0.0.43
 
 jobs:
   build:
@@ -36,7 +36,7 @@ jobs:
         export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
         export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
         export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
-        docker run --rm --privileged --mount type=bind,src=$PWD,dst=/share --mount type=bind,src=/data,dst=/data --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c " 
+        docker run -u root --rm --privileged --mount type=bind,src=$PWD,dst=/share --mount type=bind,src=/data,dst=/data --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c "
             /share/scripts/create-image.sh --release $RELEASE --version $VERSION ;"
 
     - name: Update release
