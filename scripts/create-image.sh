@@ -40,6 +40,8 @@ done
 [ -z "$DEVICE" ] && (echo "Device has to be specified with DEVICE= env" && exit -1)
 [ -z "$RELEASE" ] && (echo "Release has to be specified with --release option" && exit -1)
 
+RELEASEMAJMIN=${RELEASE:0:3}
+
 case $VERSION in
     testing)
 		URL=http://repo.merproject.org/obs/nemo:/testing:/hw:/$VENDOR:/$DEVICE/sailfishos_${RELEASE}
@@ -82,7 +84,7 @@ df -h
 
 echo "Creating mic with $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-$VERSION-\@ARCH\@.ks "
 mic create loop --arch=$PORT_ARCH \
- --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE \
+ --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,RELEASEMAJMIN:$RELEASEMAJMIN,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE \
  --record-pkgs=name,url \
  --outdir=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME \
  $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-$VERSION-\@ARCH\@.ks 
@@ -102,7 +104,7 @@ echo "Create super.img..."
 ./lpunpack_and_lpmake/bin/lpmake --metadata-size 65536 --metadata-slots 1 --sparse --super-name super --device super:8589934592 --group sailfish:8585740288 --partition system_a:none:8388608000:sailfish --image system_a=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/root.img --output $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME/super.img
 
 echo "Pack final image..."
-# mv $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME $OUTPUTDIR/SailfishOS-$DEVICE
+mv $OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME $OUTPUTDIR/SailfishOS-$DEVICE
 rm $OUTPUTDIR/SailfishOS-$DEVICE/root.img
 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on /share/output/SailfishOS-$DEVICE.7z  $OUTPUTDIR/SailfishOS-$DEVICE
 
